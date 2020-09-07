@@ -5,14 +5,16 @@ import axios from 'axios';
 
 const {width, height} = Dimensions.get('window');
 
+const MERCHANT_KEY =
+  'YOUR_MERCHANT_KEY';
+
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       reference_token: '',
       transaction_no: '',
-      merchant_key:
-        'YOUR_MERCHANT_KEY',
+      merchant_key: '',
       paymentResult: 'Pending',
       canGoBack: false,
       check_reference_token: false,
@@ -33,8 +35,7 @@ class App extends React.Component {
       method: 'post',
       url: 'https://foloosi.com/api/v1/api/initialize-setup',
       headers: {
-        merchant_key:
-          'YOUR_MERCHANT_KEY',
+        merchant_key: MERCHANT_KEY,
       },
       data: {
         transaction_amount: '100',
@@ -87,7 +88,7 @@ class App extends React.Component {
 
   render() {
     const reference_token = this.state.reference_token;
-    var ref = `https://widget.foloosi.com/?{"reference_token":"${reference_token}","secret_key":"YOUR_MERCHANT_KEY"}`;
+    var ref = `https://widget.foloosi.com/?{"reference_token":"${reference_token}","secret_key":"${MERCHANT_KEY}"}`;
     const htmlContent = `<!DOCTYPE html>
     <html>
     <head>
@@ -118,7 +119,7 @@ class App extends React.Component {
     document.getElementById('root').innerHTML = content;
     setTimeout(function(){
       document.getElementById('FoloosiPayPluginApiiframe').src = '${ref}';
-    }, 500);
+    }, 0);
     var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
     var successHandler = window[eventMethod];
     var responseSuccess = eventMethod === "attachEvent" ? "onmessage" : "message";
